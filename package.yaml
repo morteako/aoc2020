@@ -1,0 +1,55 @@
+name:                aoc2020
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/githubuser/aoc2020#readme
+license:             BSD3
+author:              Author name here
+maintainer:          example@example.com
+copyright:           2020 Author name here
+category:            Web
+extra-source-files:
+- README.md
+
+default-extensions:
+  - OverloadedStrings
+  - ScopedTypeVariables
+  - TupleSections
+  - ViewPatterns
+  - PatternSynonyms
+  - DerivingVia
+  - DeriveFunctor
+  - DeriveTraversable
+  - DeriveFoldable
+  - DeriveGeneric
+  - GeneralizedNewtypeDeriving
+  - MultiWayIf
+  - GADTs
+  - InstanceSigs
+  - LambdaCase
+  - NamedFieldPuns
+  - RankNTypes
+  - TypeApplications
+  - TypeOperators
+
+
+
+dependencies:
+  - base >= 4.7 && < 5
+  - http-conduit
+  - lens
+  - bytestring
+  - containers
+  - extra
+  - mtl
+  - megaparsec
+  - dotenv
+  - foldl
+  - text
+  - unordered-containers
+  - optparse-applicative
+
+executables:
+  aoc2020:
+    source-dirs:      src
+    main:             Main.hs

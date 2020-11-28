@@ -1,0 +1,47 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 3d1decb7ba00f502be545a8d47e89ac3c9061e0e81914e2d307a3fca6ffaf9c4
+
+name:           aoc2020
+version:        0.1.0.0
+category:       Web
+homepage:       https://github.com/githubuser/aoc2020#readme
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable aoc2020
+  main-is: Main.hs
+  other-modules:
+      CmdArgs
+      Day.Day1
+      Input
+      Utils
+      Paths_aoc2020
+  hs-source-dirs:
+      src
+  default-extensions: OverloadedStrings ScopedTypeVariables TupleSections ViewPatterns PatternSynonyms DerivingVia DeriveFunctor DeriveTraversable DeriveFoldable DeriveGeneric GeneralizedNewtypeDeriving MultiWayIf GADTs InstanceSigs LambdaCase NamedFieldPuns RankNTypes TypeApplications TypeOperators
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , containers
+    , dotenv
+    , extra
+    , foldl
+    , http-conduit
+    , lens
+    , megaparsec
+    , mtl
+    , optparse-applicative
+    , text
+    , unordered-containers
+  default-language: Haskell2010
