@@ -3,6 +3,7 @@ module CmdArgs where
 import qualified Data.Bifunctor as Bifunctor
 import Options.Applicative as Opt
 import Text.Megaparsec as Parsec
+import Utils
 
 data Options = Options
   { day :: Day,
@@ -18,12 +19,12 @@ megaparsecReader :: Parsec String String a -> ReadM a
 megaparsecReader parser =
   eitherReader (Bifunctor.first show . Parsec.parse parser "")
 
-cmdParser :: String -> ParserInfo Options
+cmdParser :: Int -> ParserInfo Options
 cmdParser lastDay =
   info
     (options2 <**> helper)
     ( fullDesc
-        <> progDesc ("Run a advent of code challenge. Default is to run the last implemented challenge (day " <> lastDay <> ") and fetch the corresponding input")
+        <> progDesc ("Run a advent of code challenge. Default is to run the last implemented challenge (" <> show lastDay <> ") and fetch the corresponding input")
         <> header "aoc2020 - haskell solutions for advent of code 2020"
     )
 
