@@ -1,4 +1,4 @@
-module Day.Day1 where
+module Day.Day01 where
 
 run :: Show a => a -> IO ()
 run xs = do
