@@ -29,7 +29,7 @@ createHeaders = do
 
 makeRequest :: String -> IO Request
 makeRequest day = do
-  let url = "https://adventofcode.com/2019/day/" <> day <> "/input"
+  let url = "https://adventofcode.com/2020/day/" <> day <> "/input"
   headers <- createHeaders
   pure $
     parseRequest_ url

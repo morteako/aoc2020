@@ -9,7 +9,7 @@ Can choose day from cmdargs.
 
 ## Days completed
 
-- [ ] [Day 1](https://github.com/morteako/aoc2020/blob/main/rc/Day/Day01.hs)
+- [x] [Day 1](https://github.com/morteako/aoc2020/blob/main/rc/Day/Day01.hs)
 - [ ] [Day 2](https://github.com/morteako/aoc2020/blob/main/rc/Day/Day02.hs)
 - [ ] [Day 3](https://github.com/morteako/aoc2020/blob/main/rc/Day/Day03.hs)
 - [ ] [Day 4](https://github.com/morteako/aoc2020/blob/main/rc/Day/Day04.hs)
