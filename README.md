@@ -33,6 +33,7 @@ Can choose day from cmdargs.
 - [ ] [Day 22](https://github.com/morteako/aoc2020/blob/main/src/Day/Day22.hs)
 - [ ] [Day 23](https://github.com/morteako/aoc2020/blob/main/src/Day/Day23.hs)
 - [ ] [Day 24](https://github.com/morteako/aoc2020/blob/main/src/Day/Day24.hs)
+- [ ] [Day 25](https://github.com/morteako/aoc2020/blob/main/src/Day/Day25.hs)
 
 
 
