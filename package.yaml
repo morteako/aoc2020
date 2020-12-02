@@ -48,6 +48,7 @@ dependencies:
   - text
   - unordered-containers
   - optparse-applicative
+  - safe
 
 executables:
   aoc2020:

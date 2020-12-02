@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 441e6084b7fdeeeab9068211feefb04a01605c41fb7db2560269167abdd4fac9
+-- hash: 6ccd9000044986cdd0cd067f62bc1d167d7d260c526eea02e6a10baf12ad117b
 
 name:           aoc2020
 version:        0.1.0.0
@@ -24,6 +24,7 @@ executable aoc2020
   other-modules:
       CmdArgs
       Day.Day01
+      Day.Day02
       Input
       Utils
       Paths_aoc2020
@@ -42,6 +43,7 @@ executable aoc2020
     , megaparsec
     , mtl
     , optparse-applicative
+    , safe
     , text
     , unordered-containers
   default-language: Haskell2010
