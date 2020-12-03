@@ -11,8 +11,8 @@ import qualified Day.Day01
 import qualified Day.Day02
 import qualified Day.Day03
 import Input (getInput)
-import Options.Applicative
-import Utils
+import Options.Applicative (execParser)
+import Utils ((=:))
 
 funcs :: IntMap (String -> IO ())
 funcs =
