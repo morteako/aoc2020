@@ -44,6 +44,9 @@ runner Options {day, input} = do
       getContents >>= func
     File path -> do
       readFile path >>= func
+    Test -> do
+      let path = "input/" <> show lastDayNr <> "test"
+      readFile path >>= func
     DayInput -> do
       getInput lastDayNr >>= func
 

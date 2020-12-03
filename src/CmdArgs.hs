@@ -13,7 +13,7 @@ data Options = Options
 
 data Day = LastDay | SpecificDay Int deriving (Show)
 
-data Input = StdIn | File String | DayInput deriving (Show)
+data Input = StdIn | File String | Test | DayInput deriving (Show)
 
 megaparsecReader :: Parsec String String a -> ReadM a
 megaparsecReader parser =
@@ -22,17 +22,17 @@ megaparsecReader parser =
 cmdParser :: Int -> ParserInfo Options
 cmdParser lastDay =
   info
-    (options2 <**> helper)
+    (options <**> helper)
     ( fullDesc
         <> progDesc ("Run a advent of code challenge. Default is to run the last implemented challenge (" <> show lastDay <> ") and fetch the corresponding input")
         <> header "aoc2020 - haskell solutions for advent of code 2020"
     )
 
-options2 :: Parser Options
-options2 =
+options :: Parser Options
+options =
   Options
     <$> (specificDayInput <|> pure LastDay)
-    <*> (stdInput <|> fileInput <|> pure DayInput)
+    <*> (stdInput <|> fileInput <|> testInput <|> pure DayInput)
 
 specificDayInput :: Parser Day
 specificDayInput =
@@ -58,4 +58,13 @@ stdInput =
     StdIn
     ( long "stdin"
         <> help "Read from stdin"
+    )
+
+testInput :: Parser Input
+testInput =
+  flag'
+    Test
+    ( short 'T'
+        <> long "test"
+        <> help "Reads from 'input/DAYtest'"
     )
