@@ -6,3 +6,6 @@ import Data.Maybe (fromMaybe)
 (?:) = flip fromMaybe
 
 (=:) = (,)
+
+count :: Eq a => a -> [a] -> Int
+count x = length . filter (== x)

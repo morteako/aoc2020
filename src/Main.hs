@@ -9,6 +9,7 @@ import Data.IntMap.Strict (IntMap)
 import qualified Data.IntMap.Strict as IntMap
 import qualified Day.Day01
 import qualified Day.Day02
+import qualified Day.Day03
 import Input (getInput)
 import Options.Applicative
 import Utils
@@ -17,7 +18,8 @@ funcs :: IntMap (String -> IO ())
 funcs =
   Map.fromList
     [ 1 =: Day.Day01.run,
-      2 =: Day.Day02.run
+      2 =: Day.Day02.run,
+      3 =: Day.Day03.run
     ]
 
 lastDayNr :: Int

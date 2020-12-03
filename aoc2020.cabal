@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6ccd9000044986cdd0cd067f62bc1d167d7d260c526eea02e6a10baf12ad117b
+-- hash: 5a95efdc029f85ee89a154df1b4985077c08201e4cb164d5e240fab321990c77
 
 name:           aoc2020
 version:        0.1.0.0
@@ -25,6 +25,7 @@ executable aoc2020
       CmdArgs
       Day.Day01
       Day.Day02
+      Day.Day03
       Input
       Utils
       Paths_aoc2020
