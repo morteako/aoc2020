@@ -1,30 +1,36 @@
 module Day.Day03 where
 
 import Control.Monad ((>=>))
-import Data.List (unfoldr)
+import Data.Functor.Foldable
+import Data.Maybe (fromMaybe)
 import Safe (headMay)
-import Utils (count)
 
-walk :: Int -> Int -> [[a]] -> [a]
-walk right down = unfoldr move
+-- walk :: Int -> Int -> [[a]] -> [a]
+walk :: Int -> Int -> [String] -> Int
+walk right down = hylo len move
   where
-    move [] = Nothing
-    move xs = do
+    move [] = Nil
+    move xs = fromMaybe Nil $ do
       let movedRight = fmap (drop right) xs
       let movedDown = drop down movedRight
       a <- (headMay >=> headMay) movedDown
-      pure (a, movedDown)
+      pure $ Cons a movedDown
 
-walkWith :: Int -> Int -> [String] -> Int
-walkWith right down = count '#' . walk right down
+    len Nil = 0
+    len (Cons '#' x) = x
+    len (Cons _ x) = x
 
 solve1 :: [String] -> Int
-solve1 = walkWith 3 1
+solve1 = walk 3 1
 
 solve2 :: [String] -> Int
-solve2 xs = product [f 1 1, f 3 1, f 5 1, f 7 1, f 1 2]
+solve2 xs = hylo prod build [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
   where
-    f n m = walkWith n m xs
+    build [] = Nil
+    build ((n, m) : ys) = Cons (walk n m xs) ys
+
+    prod Nil = 1
+    prod (Cons x xs) = x * xs
 
 parse :: String -> [String]
 parse = fmap cycle . lines

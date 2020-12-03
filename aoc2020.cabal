@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5a95efdc029f85ee89a154df1b4985077c08201e4cb164d5e240fab321990c77
+-- hash: bb71d9f2c45b198b4c5fe3a64b76f942cd379a93b66c5a09e7f1484bbed9751c
 
 name:           aoc2020
 version:        0.1.0.0
@@ -44,6 +44,7 @@ executable aoc2020
     , megaparsec
     , mtl
     , optparse-applicative
+    , recursion-schemes
     , safe
     , text
     , unordered-containers

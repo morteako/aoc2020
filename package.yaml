@@ -49,6 +49,7 @@ dependencies:
   - unordered-containers
   - optparse-applicative
   - safe
+  - recursion-schemes
 
 executables:
   aoc2020:
