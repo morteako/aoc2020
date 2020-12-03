@@ -17,7 +17,7 @@ walk right down = hylo len move
       pure $ Cons a movedDown
 
     len Nil = 0
-    len (Cons '#' x) = x
+    len (Cons '#' x) = succ x
     len (Cons _ x) = x
 
 solve1 :: [String] -> Int
