@@ -9,3 +9,5 @@ import Data.Maybe (fromMaybe)
 
 count :: Eq a => a -> [a] -> Int
 count x = length . filter (== x)
+
+countP p = length . filter p

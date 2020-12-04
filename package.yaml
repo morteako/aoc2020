@@ -49,6 +49,8 @@ dependencies:
   - unordered-containers
   - optparse-applicative
   - safe
+  - split
+  - parsec
 
 executables:
   aoc2020:
