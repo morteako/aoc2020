@@ -89,5 +89,5 @@ solve2 = Utils.countP check
 run :: String -> IO ()
 run xs = do
   let parsed = parseInput xs
-  print $ solve1 parsed
-  print $ solve2 parsed
+  print $ solve1 parsed -- 204
+  print $ solve2 parsed -- 179
