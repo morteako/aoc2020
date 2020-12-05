@@ -32,6 +32,7 @@ lastDayRunnner :: String -> IO ()
 
 runner :: Options -> IO ()
 runner Options {day, input} = do
+  print day
   let func :: String -> IO ()
       func i = case day of
         LastDay ->
@@ -43,16 +44,19 @@ runner Options {day, input} = do
               putStrLn $ "Currently implemented : " <> unwords (show <$> IntMap.keys funcs)
             Just dayRunner ->
               dayRunner i
-  case input of
+  inputFile <- case input of
     StdIn -> do
-      getContents >>= func
+      getContents
     File path -> do
-      readFile path >>= func
+      readFile path
     Test -> do
       let path = "input/" <> show lastDayNr <> "test"
-      readFile path >>= func
+      readFile path
     DayInput -> do
-      getInput lastDayNr >>= func
+      case day of
+        LastDay -> getInput lastDayNr
+        SpecificDay d -> getInput d
+  func inputFile
 
 main :: IO ()
 main = do

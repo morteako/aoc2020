@@ -3,6 +3,7 @@ module CmdArgs where
 import qualified Data.Bifunctor as Bifunctor
 import Options.Applicative as Opt
 import Text.Megaparsec as Parsec
+import Text.Read (readMaybe)
 import Utils
 
 data Options = Options
@@ -34,9 +35,14 @@ options =
     <$> (specificDayInput <|> pure LastDay)
     <*> (stdInput <|> fileInput <|> testInput <|> pure DayInput)
 
+readInt :: String -> Int
+readInt s = case readMaybe s of
+  Nothing -> error s
+  Just x -> x
+
 specificDayInput :: Parser Day
 specificDayInput =
-  SpecificDay . read
+  SpecificDay . readInt
     <$> strOption
       ( long "day"
           <> metavar "DAY"
