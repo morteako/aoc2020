@@ -32,7 +32,6 @@ lastDayRunnner :: String -> IO ()
 
 runner :: Options -> IO ()
 runner Options {day, input} = do
-  print day
   let func :: String -> IO ()
       func i = case day of
         LastDay ->
