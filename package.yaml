@@ -51,6 +51,7 @@ dependencies:
   - safe
   - split
   - parsec
+  - groupBy
 
 executables:
   aoc2020:
