@@ -1,5 +1,3 @@
-{-# LANGUAGE FlexibleContexts #-}
-
 module Day.Day06 where
 
 import Data.List.Split (splitOn)
