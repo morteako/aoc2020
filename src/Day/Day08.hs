@@ -4,9 +4,8 @@ import Control.Lens
 import Control.Monad.Reader
 import Control.Monad.State.Lazy
 import Data.Char
-import Data.Map.Strict (Map, (!))
+import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
-import Data.Monoid
 import Data.Set (Set)
 import qualified Data.Set as Set
 
@@ -29,11 +28,13 @@ execInstr i = do
   if (Set.member i visited)
     then pure Loop
     else do
-      modify (over _2 (Set.insert i))
+      _2 %= Set.insert i
       instr <- asks (Map.lookup i)
       case instr of
         Nothing -> pure Terminate
-        Just (Acc a) -> modify (over _1 (+ a)) *> execInstr (succ i)
+        Just (Acc a) -> do
+          _1 += a
+          execInstr (succ i)
         Just (Nop _) -> execInstr (succ i)
         Just (Jmp j) -> execInstr (i + j)
 
@@ -47,6 +48,10 @@ runInstrs dict = flip runReader dict $ runStateT (execInstr 0) (0, Set.empty)
 flipInstr (Jmp i) = Nop i
 flipInstr (Nop i) = Jmp i
 flipInstr x = x
+
+-- flipInstr' (Jmp i) = Just $ Nop i
+-- flipInstr' (Nop i) = Just $ Jmp i
+-- flipInstr' _ = Nothing
 
 solve2 dict = do
   i <- is
