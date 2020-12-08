@@ -14,6 +14,7 @@ import qualified Day.Day04
 import qualified Day.Day05
 import qualified Day.Day06
 import qualified Day.Day07
+import qualified Day.Day08
 import Input (getInput)
 import Options.Applicative (execParser)
 import Utils ((=:))
@@ -27,7 +28,8 @@ funcs =
       4 =: Day.Day04.run,
       5 =: Day.Day05.run,
       6 =: Day.Day06.run,
-      7 =: Day.Day07.run
+      7 =: Day.Day07.run,
+      8 =: Day.Day08.run
     ]
 
 lastDayNr :: Int
