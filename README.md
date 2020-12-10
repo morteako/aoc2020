@@ -18,7 +18,7 @@ Can choose day from cmdargs.
 - [x] [Day 7](https://github.com/morteako/aoc2020/blob/main/src/Day/Day07.hs)
 - [x] [Day 8](https://github.com/morteako/aoc2020/blob/main/src/Day/Day08.hs)
 - [x] [Day 9](https://github.com/morteako/aoc2020/blob/main/src/Day/Day09.hs)
-- [ ] [Day 10](https://github.com/morteako/aoc2020/blob/main/src/Day/Day10.hs)
+- [x] [Day 10](https://github.com/morteako/aoc2020/blob/main/src/Day/Day10.hs)
 - [ ] [Day 11](https://github.com/morteako/aoc2020/blob/main/src/Day/Day11.hs)
 - [ ] [Day 12](https://github.com/morteako/aoc2020/blob/main/src/Day/Day12.hs)
 - [ ] [Day 13](https://github.com/morteako/aoc2020/blob/main/src/Day/Day13.hs)

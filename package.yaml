@@ -52,6 +52,7 @@ dependencies:
   - split
   - parsec
   - groupBy
+  - memoize
 
 executables:
   aoc2020:
