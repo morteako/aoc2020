@@ -2,15 +2,11 @@
 
 module Day.Day11 where
 
-import Control.Comonad.Store
 import Control.Lens hiding (Empty)
-import Control.Monad
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 import Data.Maybe (mapMaybe)
-import Debug.Trace
 import Linear hiding (trace)
-import Safe (headMay)
 
 parseAsciiMap ::
   (Char -> Maybe a) ->
@@ -54,24 +50,26 @@ rundayGen lim getNeigs grid = if grid == newGrid then grid else rundayGen lim ge
       where
         occNbs = length $ filter (== Occ) (getNeigs grid point)
 
-solve1 :: Map (V2 Int) Seat -> Int
-solve1 = Map.size . Map.filter (== Occ) . rundayGen 4 countClose
+countOcc = Map.size . Map.filter (== Occ)
 
-countClose :: Map (V2 Int) b -> V2 Int -> [b]
-countClose grid point = mapMaybe (`Map.lookup` grid) (nbs point)
+solve1 :: Map (V2 Int) Seat -> Int
+solve1 = countOcc . rundayGen 4 countClose
+  where
+    countClose :: Map (V2 Int) b -> V2 Int -> [b]
+    countClose grid point = mapMaybe (`Map.lookup` grid) (nbs point)
 
 solve2 :: Map (V2 Int) Seat -> Int
 solve2 = Map.size . Map.filter (== Occ) . rundayGen 5 countDiag
+  where
+    dirs :: V2 Int -> [[V2 Int]]
+    dirs v2 = tail $ do
+      f <- [id, pred, succ]
+      g <- [id, pred, succ]
+      let dv = over _x f $ over _y g (V2 0 0)
+      [tail $ iterate (+ dv) v2]
 
-dirs :: V2 Int -> [[V2 Int]]
-dirs v2 = tail $ do
-  f <- [id, pred, succ]
-  g <- [id, pred, succ]
-  let dv = over _x f $ over _y g (V2 0 0)
-  [tail $ iterate (+ dv) v2]
-
-countDiag :: Map (V2 Int) Seat -> V2 Int -> [Seat]
-countDiag grid point = mapMaybe (head . dropWhile (== Just Floor) . map (`Map.lookup` grid)) (dirs point)
+    countDiag :: Map (V2 Int) Seat -> V2 Int -> [Seat]
+    countDiag grid point = mapMaybe (head . dropWhile (== Just Floor) . map (`Map.lookup` grid)) (dirs point)
 
 run :: String -> IO ()
 run xs = do
