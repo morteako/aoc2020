@@ -53,6 +53,8 @@ dependencies:
   - parsec
   - groupBy
   - memoize
+  - linear
+  - comonad
 
 executables:
   aoc2020:

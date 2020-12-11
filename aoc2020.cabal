@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ec8020cb258a87b4ace715244f24b389be4677bdef73c0ad704fddd234789ad5
+-- hash: c92030e427dc5be6931509afaa7b2b1f6718a63d5c5a287436da113ec18d989c
 
 name:           aoc2020
 version:        0.1.0.0
@@ -33,6 +33,7 @@ executable aoc2020
       Day.Day08
       Day.Day09
       Day.Day10
+      Day.Day11
       Input
       Utils
       Paths_aoc2020
@@ -42,6 +43,7 @@ executable aoc2020
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , comonad
     , containers
     , dotenv
     , extra
@@ -49,6 +51,7 @@ executable aoc2020
     , groupBy
     , http-conduit
     , lens
+    , linear
     , megaparsec
     , memoize
     , mtl
