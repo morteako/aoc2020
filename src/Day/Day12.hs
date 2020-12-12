@@ -1,7 +1,7 @@
 module Day.Day12 where
 
-import Data.Foldable
-import Linear hiding (rotate)
+import Data.Foldable (Foldable (foldl'))
+import Linear (V2 (..), perp, (^*))
 
 parse = map toAction . lines
   where
@@ -24,20 +24,25 @@ data Dir = N | S | E | W
 manhattan :: V2 Int -> Int
 manhattan (V2 x y) = abs x + abs y
 
+rotate :: Num a => V2 a -> Int -> V2 a
 rotate curVect n = iterate perp curVect !! n
 
+solve1 :: [Action] -> Int
 solve1 = manhattan . fst . foldl' move (V2 0 0, V2 1 0)
 
+move :: (V2 Int, V2 Int) -> Action -> (V2 Int, V2 Int)
 move (curPos, curVect) action = case action of
-  Forward i -> (curPos + (curVect * V2 i i), curVect)
-  Move v i -> (curPos + (v * V2 i i), curVect)
+  Forward i -> (curPos + (curVect ^* i), curVect)
+  Move v i -> (curPos + (v ^* i), curVect)
   Rotate n -> (curPos, rotate curVect n)
 
+solve2 :: [Action] -> Int
 solve2 = manhattan . fst . foldl' moveWaypoint (V2 0 0, V2 10 1)
 
+moveWaypoint :: (V2 Int, V2 Int) -> Action -> (V2 Int, V2 Int)
 moveWaypoint (curPos, waypoint) action = case action of
-  Forward i -> (curPos + (waypoint * V2 i i), waypoint)
-  Move v i -> (curPos, waypoint + (v * V2 i i))
+  Forward i -> (curPos + (waypoint ^* i), waypoint)
+  Move v i -> (curPos, waypoint + (v ^* i))
   Rotate n -> (curPos, rotate waypoint n)
 
 run xs = do
