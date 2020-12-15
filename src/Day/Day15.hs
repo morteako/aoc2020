@@ -1,6 +1,6 @@
 module Day.Day15 where
 
-import qualified Data.IntMap as Map
+import qualified Data.IntMap.Strict as Map
 import Data.List.Split (splitOn)
 
 parse :: String -> [Int]
