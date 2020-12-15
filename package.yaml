@@ -46,6 +46,7 @@ dependencies:
   - dotenv
   - foldl
   - text
+  - ordered-containers
   - unordered-containers
   - optparse-applicative
   - safe
