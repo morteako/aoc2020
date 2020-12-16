@@ -43,6 +43,8 @@ packages:
 extra-deps:
   - groupBy-0.1.0.0@sha256:9bd0c5e6bbfaf793f6e816a072bcb085dba1149bf282e998567eaaed8d0efec4
   - memoize-0.8.1
+  - git: git@github.com:morteako/IntervalMap.git
+    commit: d0b189113c4a0baf50d3873abbf5c70ad85cf951
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

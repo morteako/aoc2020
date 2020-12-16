@@ -18,6 +18,17 @@ packages:
       sha256: 598188857937054d2cc4ac91aee580944d750e91120756507891d09e02056066
   original:
     hackage: memoize-0.8.1
+- completed:
+    name: IntervalMap
+    version: 0.6.1.3
+    git: git@github.com:morteako/IntervalMap.git
+    pantry-tree:
+      size: 2239
+      sha256: 040a2730fbebc2ba1860ce3b76914075e9fb57d71956df312179e989856a8191
+    commit: d0b189113c4a0baf50d3873abbf5c70ad85cf951
+  original:
+    git: git@github.com:morteako/IntervalMap.git
+    commit: d0b189113c4a0baf50d3873abbf5c70ad85cf951
 snapshots:
 - completed:
     size: 532414

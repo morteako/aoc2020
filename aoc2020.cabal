@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3dd8faeb98d2622ba724735f6466f4b986092797cd19f4f7ef7a1061c042a743
+-- hash: 5c107b05edfa55efec7c385b2319fb45ed52824a44e62a600b27b6ca5cbf801d
 
 name:           aoc2020
 version:        0.1.0.0
@@ -38,6 +38,7 @@ executable aoc2020
       Day.Day13
       Day.Day14
       Day.Day15
+      Day.Day16
       Input
       Utils
       Paths_aoc2020
@@ -45,7 +46,8 @@ executable aoc2020
       src
   default-extensions: OverloadedStrings ScopedTypeVariables TupleSections ViewPatterns PatternSynonyms DerivingVia DeriveFunctor DeriveTraversable DeriveFoldable DeriveGeneric GeneralizedNewtypeDeriving MultiWayIf GADTs InstanceSigs LambdaCase NamedFieldPuns RankNTypes TypeApplications TypeOperators
   build-depends:
-      base >=4.7 && <5
+      IntervalMap
+    , base >=4.7 && <5
     , bytestring
     , comonad
     , containers
