@@ -10,6 +10,10 @@ import Debug.Trace
 
 readInt = read @Int
 
+type IntPair = (Int, Int)
+
+type S = ([(String, [IntPair])], [Int], [[Int]])
+
 parse xs = case splitOn "\n\n" $ xs of
   [ranges, myTicket, nearbyTickets] -> (foldMap parseProp $ lines ranges, parseTickets nearbyTickets)
   where
@@ -19,10 +23,11 @@ parse xs = case splitOn "\n\n" $ xs of
 
     parseTickets = fmap (fmap readInt . splitOn ",") . tail . lines
 
+parse2 :: [Char] -> S
 parse2 xs = case splitOn "\n\n" $ xs of
   [ranges, traceShowId . head . drop 2 . words -> myTicket, nearbyTickets] -> (map parseProp $ lines ranges, readInt <$> splitOn "," myTicket, parseTickets nearbyTickets)
   where
-    parseProp (splitOn ": " -> [name, splitOn " or " -> [r1, r2]]) = [parseRange r1, parseRange r2]
+    parseProp (splitOn ": " -> [name, splitOn " or " -> [r1, r2]]) = (name, [parseRange r1, parseRange r2])
       where
         parseRange (splitOn "-" -> [n1, n2]) = (readInt n1, readInt n2)
 
@@ -36,7 +41,7 @@ checkInSomeRange x ranges = any (inRange x) ranges
 
 checkInRangeGroup x rangeGroup = any (inRange x) rangeGroup
 
--- solve2 :: ([[(Int, Int)]], [[Int]]) -> [(Int, Int)]
+solve2 :: S -> Integer
 solve2 (ranges, yourTicket, tickets) =
   let r = getColumns (ranges, tickets)
       cols = map (Set.findMin . snd) $ take 6 $ sortOn fst $ findComb r
@@ -50,9 +55,9 @@ solve2' (ranges, yourTicket, tickets) =
 filterTickets ranges tickets = filter (\tick -> all (checkInSomeRange tick) $ concat ranges) tickets
 
 getColumns (ranges, tickets) = do
-  let filteredTickets = filter (all (flip checkInSomeRange (concat ranges))) tickets
+  let filteredTickets = filter (all (flip checkInSomeRange (concatMap snd ranges))) tickets
   ts <- transpose filteredTickets
-  pure $ Set.fromList $ map fst $ filter (\(_, r) -> all (\t -> checkInRangeGroup t r) ts) $ zip [0 ..] ranges
+  pure $ Set.fromList $ map fst $ filter (\(_, r) -> all (\t -> checkInRangeGroup t r) ts) ranges
 
 -- pure $ ts
 
