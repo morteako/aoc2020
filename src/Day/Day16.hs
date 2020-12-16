@@ -8,84 +8,49 @@ import Data.List.Split
 import qualified Data.Set as Set
 import Debug.Trace
 
-readInt = read @Int
-
 type IntPair = (Int, Int)
 
-type S = ([(String, [IntPair])], [Int], [[Int]])
+type RangesYourAndTickets = ([(String, [IntPair])], [Int], [[Int]])
 
+parse :: [Char] -> RangesYourAndTickets
 parse xs = case splitOn "\n\n" $ xs of
-  [ranges, myTicket, nearbyTickets] -> (foldMap parseProp $ lines ranges, parseTickets nearbyTickets)
-  where
-    parseProp (splitOn ": " -> [name, splitOn " or " -> [r1, r2]]) = [parseRange r1, parseRange r2]
-      where
-        parseRange (splitOn "-" -> [n1, n2]) = (readInt n1, readInt n2)
-
-    parseTickets = fmap (fmap readInt . splitOn ",") . tail . lines
-
-parse2 :: [Char] -> S
-parse2 xs = case splitOn "\n\n" $ xs of
-  [ranges, traceShowId . head . drop 2 . words -> myTicket, nearbyTickets] -> (map parseProp $ lines ranges, readInt <$> splitOn "," myTicket, parseTickets nearbyTickets)
+  [ranges, head . drop 2 . words -> myTicket, nearbyTickets] -> (map parseProp $ lines ranges, read <$> splitOn "," myTicket, parseTickets nearbyTickets)
   where
     parseProp (splitOn ": " -> [name, splitOn " or " -> [r1, r2]]) = (name, [parseRange r1, parseRange r2])
-      where
-        parseRange (splitOn "-" -> [n1, n2]) = (readInt n1, readInt n2)
-
-    parseTickets = fmap (fmap readInt . splitOn ",") . tail . lines
+    parseRange (splitOn "-" -> [n1, n2]) = (read n1, read n2)
+    parseTickets = fmap (fmap read . splitOn ",") . tail . lines
 
 inRange x (a, b) = a <= x && x <= b
 
-solve1 (ranges, tickets) = sum $ foldMap (filter (\t -> not $ checkInSomeRange t ranges)) tickets
+solve1 :: RangesYourAndTickets -> Int
+solve1 (ranges, _, tickets) = sum $ foldMap (filter (\t -> not $ checkInSomeRange t $ concatMap snd ranges)) tickets
 
 checkInSomeRange x ranges = any (inRange x) ranges
 
-checkInRangeGroup x rangeGroup = any (inRange x) rangeGroup
-
--- solve2 :: S -> _
+solve2 :: RangesYourAndTickets -> Int
 solve2 (ranges, yourTicket, tickets) =
   let r = getColumns (ranges, yourTicket, tickets)
       cols = over (traverse . _2) Set.findMin $ findComb r
    in product $ map (yourTicket !!) $ map fst $ filter (\(a, b) -> isPrefixOf "departure" b) cols
 
--- solve2' (ranges, yourTicket, tickets) =
---   let r = getColumns (ranges, tickets)
---       cols = map (Set.findMin . snd) $ take 6 $ sortOn fst $ findComb r
---    in findComb r
-
-filterTickets ranges tickets = filter (\tick -> all (checkInSomeRange tick) $ concat ranges) tickets
-
-getColumns :: S -> [(Int, Set.Set String)]
+getColumns :: RangesYourAndTickets -> [(Int, Set.Set String)]
 getColumns (ranges, _, tickets) = zip [0 ..] $ do
-  let filteredTickets = filter (all (flip checkInSomeRange (concatMap snd ranges))) tickets
+  let checkAll = all (flip checkInSomeRange (concatMap snd ranges))
+  let filteredTickets = filter checkAll tickets
   ts <- transpose filteredTickets
-  let ran = filter (\(_, r) -> all (\t -> checkInRangeGroup t r) ts) ranges
+  let ran = filter (\(_, r) -> all (\t -> checkInSomeRange t r) ts) ranges
   pure $ Set.fromList $ map fst ran
 
--- pure $ ts
-
-findComb xs = combine xs
+findComb :: [(Int, Set.Set String)] -> [(Int, Set.Set String)]
+findComb xs = case rest of
+  [] -> ones
+  _ -> ones ++ findComb ((over (traverse . _2) removeOld) rest)
   where
-    combine :: [(Int, Set.Set String)] -> [(Int, Set.Set String)]
-    combine xs =
-      let (ones, rest) = partition ((1 ==) . Set.size . snd) xs
-          ws = Set.unions $ fmap snd ones
-       in if null rest then ones else ones ++ combine ((over (traverse . _2) (flip Set.difference ws)) rest)
+    (ones, rest) = partition ((1 ==) . Set.size . snd) xs
+    removeOld w = Set.difference w (Set.unions $ fmap snd ones)
 
 run xs = do
-  -- print xs
   let parsed = parse xs
-  -- print $ parse2 xs
 
-  -- print $ solve1 parsed
-  -- let (ranges, tickets) = parse2 xs
-  -- mapM print ranges
-  -- mapM print tickets
-  print $ solve2 $ parse2 xs
-  -- print $ solve2' $ parse2 xs
-
-  print $ (1086463551769 :: Int)
-
-  -- mapM (\x -> print (length x) >> putStrLn "\n") $ transpose tickets
-  -- print $ transpose (transpose tickets) == tickets
-
-  pure ()
+  print $ solve1 parsed -- 20060
+  print $ solve2 parsed -- 2843534243843
