@@ -2,10 +2,10 @@ module Day.Day16 where
 
 import Control.Lens
 import Control.Monad
-import qualified Data.IntSet as Set
 import Data.List
 import Data.List (transpose)
 import Data.List.Split
+import qualified Data.Set as Set
 import Debug.Trace
 
 readInt = read @Int
@@ -41,29 +41,31 @@ checkInSomeRange x ranges = any (inRange x) ranges
 
 checkInRangeGroup x rangeGroup = any (inRange x) rangeGroup
 
-solve2 :: S -> Integer
+-- solve2 :: S -> _
 solve2 (ranges, yourTicket, tickets) =
-  let r = getColumns (ranges, tickets)
-      cols = map (Set.findMin . snd) $ take 6 $ sortOn fst $ findComb r
-   in product $ map toInteger $ map (yourTicket !!) cols
+  let r = getColumns (ranges, yourTicket, tickets)
+      cols = over (traverse . _2) Set.findMin $ findComb r
+   in product $ map (yourTicket !!) $ map fst $ filter (\(a, b) -> isPrefixOf "departure" b) cols
 
-solve2' (ranges, yourTicket, tickets) =
-  let r = getColumns (ranges, tickets)
-      cols = map (Set.findMin . snd) $ take 6 $ sortOn fst $ findComb r
-   in findComb r
+-- solve2' (ranges, yourTicket, tickets) =
+--   let r = getColumns (ranges, tickets)
+--       cols = map (Set.findMin . snd) $ take 6 $ sortOn fst $ findComb r
+--    in findComb r
 
 filterTickets ranges tickets = filter (\tick -> all (checkInSomeRange tick) $ concat ranges) tickets
 
-getColumns (ranges, tickets) = do
+getColumns :: S -> [(Int, Set.Set String)]
+getColumns (ranges, _, tickets) = zip [0 ..] $ do
   let filteredTickets = filter (all (flip checkInSomeRange (concatMap snd ranges))) tickets
   ts <- transpose filteredTickets
-  pure $ Set.fromList $ map fst $ filter (\(_, r) -> all (\t -> checkInRangeGroup t r) ts) ranges
+  let ran = filter (\(_, r) -> all (\t -> checkInRangeGroup t r) ts) ranges
+  pure $ Set.fromList $ map fst ran
 
 -- pure $ ts
 
-findComb xs = if all Set.null xs then undefined else combine (zip [0 ..] xs)
+findComb xs = combine xs
   where
-    combine :: [(Int, Set.IntSet)] -> [(Int, Set.IntSet)]
+    combine :: [(Int, Set.Set String)] -> [(Int, Set.Set String)]
     combine xs =
       let (ones, rest) = partition ((1 ==) . Set.size . snd) xs
           ws = Set.unions $ fmap snd ones
@@ -79,7 +81,7 @@ run xs = do
   -- mapM print ranges
   -- mapM print tickets
   print $ solve2 $ parse2 xs
-  print $ solve2' $ parse2 xs
+  -- print $ solve2' $ parse2 xs
 
   print $ (1086463551769 :: Int)
 
