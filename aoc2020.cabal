@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1e5d8466bc74c4bcb754a4111c074df4b79b4b737d920506224894826a4120e1
+-- hash: fedd420d9b63a22033807e0df8a43cb6d057b3118486ce35c8ef3e957f1c4f6e
 
 name:           aoc2020
 version:        0.1.0.0
@@ -41,6 +41,7 @@ executable aoc2020
       Day.Day16
       Day.Day17
       Day.Day18
+      Day.Day18Extra
       Input
       Utils
       Paths_aoc2020
@@ -57,6 +58,7 @@ executable aoc2020
     , extra
     , foldl
     , groupBy
+    , haskell-src-meta
     , http-conduit
     , lens
     , linear
@@ -68,6 +70,7 @@ executable aoc2020
     , parsec
     , safe
     , split
+    , template-haskell
     , text
     , unordered-containers
   default-language: Haskell2010

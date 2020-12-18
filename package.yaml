@@ -57,6 +57,8 @@ dependencies:
   - linear
   - comonad
   - IntervalMap
+  - haskell-src-meta
+  - template-haskell
 
 executables:
   aoc2020:
