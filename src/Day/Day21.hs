@@ -15,12 +15,13 @@ parse = map (f . splitOn " (contains ") . lines
 solve1 (unzip -> (ingrs, allergenMap)) = sum $ Map.withoutKeys ingCounts allergenic
   where
     ingCounts = Map.unionsWith (+) ingrs
-    allergenic = fold . Map.unionsWith Set.intersection $ allergenMap
+    allergenic = fold . findAllergenic $ allergenMap
 
-solve2 (unzip -> (ingrs, allergenMap)) = concat $ intersperse "," $ map snd xs
+findAllergenic = Map.unionsWith Set.intersection
+
+solve2 (map snd -> allergenMap) = intercalate "," $ map snd xs
   where
-    xs = sort $ over (traverse . _2) Set.findMin $ findComb $ Map.toList allergenic
-    allergenic = Map.unionsWith Set.intersection $ allergenMap
+    xs = sort $ over (traverse . _2) Set.findMin $ findComb $ Map.toList $ findAllergenic allergenMap
 
 findComb :: [(String, Set.Set String)] -> [(String, Set.Set String)]
 findComb xs = case rest of
